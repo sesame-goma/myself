@@ -1,4 +1,5 @@
 import React from 'react';
+import SwipeableViews from 'react-swipeable-views';
 import { NextPage } from 'next';
 import Typography from '@material-ui/core/Typography';
 import { 
@@ -51,6 +52,10 @@ const Home: NextPage = () => {
     setValue(newValue);
   }
 
+  const handleChangeIndex = (index: number) => {
+    setValue(index);
+  };
+
   return (
     <Container>
       <Tabs
@@ -65,27 +70,33 @@ const Home: NextPage = () => {
         <Tab label="History" {...allyProps(2)} />
         <Tab label="Contact" {...allyProps(3)} />
       </Tabs>
-      <TabPanel
-        value={value}
-        index={0}
-        dir={theme.direction}
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
       >
-        <About />
+        <TabPanel
+          value={value}
+          index={0}
+          dir={theme.direction}
+        >
+          <About />
+        </TabPanel>
+        <TabPanel
+          value={value}
+          index={1}
+          dir={theme.direction}
+        >
+          二番目
       </TabPanel>
-      <TabPanel
-        value={value}
-        index={1}
-        dir={theme.direction}
-      >
-        二番目
+        <TabPanel
+          value={value}
+          index={2}
+          dir={theme.direction}
+        >
+          三番目
       </TabPanel>
-      <TabPanel
-        value={value}
-        index={2}
-        dir={theme.direction}
-      >
-        三番目
-      </TabPanel>
+      </SwipeableViews>
     </Container>
   );
 }
