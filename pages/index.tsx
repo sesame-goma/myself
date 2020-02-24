@@ -13,6 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 // 内部インポート
 import About from './About';
+import Skill from './Skill';
 
 interface TabPanelInterface {
   children: any;
@@ -58,18 +59,20 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-        variant="fullWidth"
-      >
-        <Tab label="About" {...allyProps(0)} />
-        <Tab label="Skill" {...allyProps(1)} />
-        <Tab label="History" {...allyProps(2)} />
-        <Tab label="Contact" {...allyProps(3)} />
-      </Tabs>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleChange}
+          variant="fullWidth"
+        >
+          <Tab label="About" {...allyProps(0)} />
+          <Tab label="Skill" {...allyProps(1)} />
+          <Tab label="History" {...allyProps(2)} />
+          <Tab label="Contact" {...allyProps(3)} />
+        </Tabs>
+      </AppBar>
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
@@ -87,15 +90,15 @@ const Home: NextPage = () => {
           index={1}
           dir={theme.direction}
         >
-          二番目
-      </TabPanel>
+          <Skill />
+        </TabPanel>
         <TabPanel
           value={value}
           index={2}
           dir={theme.direction}
         >
           三番目
-      </TabPanel>
+        </TabPanel>
       </SwipeableViews>
     </Container>
   );

@@ -1,18 +1,16 @@
 import React from 'react';
 import { NextPage } from 'next';
+import { makeStyles } from '@material-ui/core/styles';
 import { 
   Avatar,
   Box,
   Divider,
+  Grid,
   List,
   ListItem,
   ListItemText,
-  Icon,
  } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
-// d.tsが作られていないライブラリで、自分で作るのも手間なのでこう呼ぶ
-const loader = require('fg-loadcss');
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -23,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     // justifyContent: 'space-between',
   },
   list: {
-    width: '100%',
+    width: 'auto',
     backgroundColor: theme.palette.background.paper,
   },
   avatar: {
@@ -36,25 +34,26 @@ const useStyles = makeStyles(theme => ({
 const About: NextPage = () => {
   const classes = useStyles();
 
-  React.useEffect(() => {
-    loader.loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-      document.querySelector('#font-awesome-css'),
-    );
-  })
-
   return (
     <Box>
       <h1>Wataru Tatsuda </h1>
-      <Icon className="fa fa-plus-circle" />
-      <Box className={classes.box}>
+      {/* <Box className={classes.box}> */}
+      <Grid 
+        container
+        direction="row"
+        alignItems="center"
+      >
         <Avatar
           src="/goma.png"
           alt="goma"
           component="span"
           className={classes.avatar}
         />
-        <List component="nav" className={classes.list} aria-label="mailbox folders">
+        <List 
+          component="nav" 
+          className={classes.list} 
+          aria-label="mailbox folders"
+        >
           <Divider />
           <ListItem>
             <ListItemText primary="立田 渉（たつだ わたる）" secondary="Name" />
@@ -83,7 +82,8 @@ const About: NextPage = () => {
             <ListItemText primary="https://github.com/sesame-goma" secondary="GitHub" />
           </ListItem>
         </List>
-      </Box>
+      </Grid>
+      {/* </Box> */}
     </Box>
   );
 };

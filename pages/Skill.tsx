@@ -1,78 +1,168 @@
-
+import React from 'react';
 import { NextPage } from 'next';
 import { 
   Avatar,
   Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
+  Icon,
+  IconButton,
+  Typography,
+  GridList,
+  GridListTile,
+  GridListTileBar,
  } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
+import InfoIcon from '@material-ui/icons/Info';
 import { makeStyles } from '@material-ui/core/styles';
+// d.tsが作られていないライブラリで、自分で作るのも手間なのでこう呼ぶ
+const loader = require('fg-loadcss');
+
+// 内部インポート
+// TODO:firebaseは後回しで
+// import firebaseIcon from 'public/firebase.svg';
+
+
 
 const useStyles = makeStyles(theme => ({
-  box: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(3),
-    },
-    // justifyContent: 'space-between',
+  firebase: {
+    width: 'auto',
+    height: 190,
   },
-  list: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
+  python: {
+    paddingTop: '20%',
+    width: 300,
+    height: 'auto',
   },
-  avatar: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
+  infoIcon: {
+    color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
 
-const About: NextPage = () => {
+const Skill: NextPage = () => {
 const classes = useStyles();
 
+  React.useEffect(() => {
+    loader.loadCSS(
+      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
+      document.querySelector('#font-awesome-css'),
+    );
+  })
   return (
     <Box>
-      <h1>Wataru Tatsuda </h1>
-      <Box className={classes.box}>
-        <Avatar
-          src="/goma.png"
-          alt="goma"
-          component="span"
-          className={classes.avatar}
-        />
-        <List component="nav" className={classes.list} aria-label="mailbox folders">
-          <Divider />
-          <ListItem>
-            <ListItemText primary="立田 渉（たつだ わたる）" secondary="Name" />
-          </ListItem>
-          <Divider />
-          {/* ListItemのpropsでもdividerは作れるけど、
-      スタイル当てられるようにコンポーネントになってる */}
-          <ListItem divider>
-            <ListItemText primary="1996年09月26日生まれ（23歳）" secondary="Birthday" />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText primary="株式会社ファーストロジック" secondary="Company" />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText primary="名古屋大学 文学部人文学科 考古学専攻（メソアメリカ考古学研究室）" secondary="University" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="基本 / 応用情報技術者、高等学校教諭免許地理歴史、学芸員" secondary="License" />
-          </ListItem>
-          <Divider/>
-          <ListItem>
-            <ListItemText primary="人生を危険に晒せ" secondary="Motto" />
-          </ListItem>
-          <Divider />
-          <ListItem divider>
-            <ListItemText primary="https://github.com/sesame-goma" secondary="GitHub" />
-          </ListItem>
-        </List>
-      </Box>
+      {/* <Box className={classes.box}> */}
+        <GridList
+          cols={3}
+          spacing={8}
+        >
+          <GridListTile>
+            <Icon
+              className="fab fa-react"
+              style={{ fontSize: '1200%' }}
+              color="primary"
+            />
+            <GridListTileBar
+              title="React / Next.js / React-Native"
+              subtitle={
+              <Rating 
+                defaultValue={4}
+                readOnly={true}
+              />
+              }
+              actionIcon={
+                <IconButton className={classes.infoIcon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+          <GridListTile>
+            <Icon className="fab fa-python" style={{ fontSize: '1200%' }} color="primary" />
+            {/* <img
+              src="/pythonLogo.png"
+              alt="python"
+              className={classes.python}
+            /> */}
+            <GridListTileBar
+              title="Python"
+              subtitle={
+              <Rating 
+                defaultValue={4}
+                readOnly={true}
+              />
+              }
+              actionIcon={
+                <IconButton className={classes.infoIcon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+          <GridListTile>
+            <Icon className="fab fa-symfony" style={{ fontSize: '1200%' }} color="primary" />
+            <GridListTileBar
+              title="Symfony"
+              subtitle={
+              <Rating 
+                defaultValue={4}
+                readOnly={true}
+              />
+              }
+              actionIcon={
+                <IconButton className={classes.infoIcon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+          <GridListTile>
+            <Icon className="fab fa-github" style={{ fontSize: '1200%' }} color="primary" />
+            <GridListTileBar
+              title="Git / GitHub"
+              subtitle={
+              <Rating 
+                defaultValue={4}
+                readOnly={true}
+              />
+              }
+              actionIcon={
+                <IconButton className={classes.infoIcon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+          <GridListTile>
+            <img
+              src="/firebaseLogo.png"
+              alt="firebase"
+              className={classes.firebase}
+            />
+            <GridListTileBar
+              title="Firebase"
+              subtitle={
+              <Rating 
+                defaultValue={4}
+                readOnly={true}
+              />
+              }
+              actionIcon={
+                <IconButton className={classes.infoIcon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        </GridList>
+        <Icon className="fab fa-html5" color="primary" />
+        <Icon className="fab fa-adobe" color="primary" />
+        <Icon className="fab fa-js" color="primary" />
+        <Icon className="fab fa-docker" color="primary" />
+        {/* なぜかPHPのアイコンだけ見切れてしまうので調整 
+      あとこれ多分style上書きしてるからboxのstyleが当たっていない*/}
+        <Icon className="fab fa-php" style={{ width: '60%' }} color="primary" />
+        <Icon className="fab fa-aws" style={{ width: '60%' }} color="primary" />
+      {/* </Box> */}
     </Box>
   );
 };
 
-export default About;
+export default Skill;
