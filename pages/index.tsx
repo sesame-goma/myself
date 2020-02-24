@@ -2,12 +2,13 @@ import React from 'react';
 import { NextPage } from 'next';
 import Typography from '@material-ui/core/Typography';
 import { 
+  AppBar,
   Box,
   Container, 
   Tab,
   Tabs,
  } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 
 // 内部インポート
 import About from './About';

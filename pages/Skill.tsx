@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { NextPage } from 'next';
 import { 
   Avatar,
@@ -7,12 +7,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Icon,
  } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-// d.tsが作られていないライブラリで、自分で作るのも手間なのでこう呼ぶ
-const loader = require('fg-loadcss');
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -32,21 +28,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 const About: NextPage = () => {
-  const classes = useStyles();
-
-  React.useEffect(() => {
-    loader.loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-      document.querySelector('#font-awesome-css'),
-    );
-  })
+const classes = useStyles();
 
   return (
     <Box>
       <h1>Wataru Tatsuda </h1>
-      <Icon className="fa fa-plus-circle" />
       <Box className={classes.box}>
         <Avatar
           src="/goma.png"
