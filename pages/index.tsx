@@ -2,17 +2,15 @@ import React from 'react';
 import { NextPage } from 'next';
 import Typography from '@material-ui/core/Typography';
 import { 
-  Avatar,
   Box,
   Container, 
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
   Tab,
   Tabs,
  } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+// 内部インポート
+import About from './About';
 
 interface TabPanelInterface {
   children: any;
@@ -44,20 +42,7 @@ const allyProps = (index: number) => {
   }
 };
 
-const useStyles = makeStyles(theme => ({
-  list: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  avatar: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-  },
-}));
-
-
 const Home: NextPage = () => {
-  const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -84,26 +69,7 @@ const Home: NextPage = () => {
         index={0}
         dir={theme.direction}
       >
-        <h1>Wataru Tatsuda </h1>
-        <Avatar src="/goma.png" alt="goma" className={classes.avatar}/>
-        <List component="nav" className={classes.list} aria-label="mailbox folders">
-          <ListItem>
-            <ListItemText primary="Inbox" />
-          </ListItem>
-          {/* ListItemのpropsでもdividerは作れるけど、
-          スタイル当てられるようにコンポーネントになってる */}
-          <Divider />
-          <ListItem divider>
-            <ListItemText primary="Drafts" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Trash" />
-          </ListItem>
-          <Divider light />
-          <ListItem>
-            <ListItemText primary="Spam" />
-          </ListItem>
-        </List>
+        <About />
       </TabPanel>
       <TabPanel
         value={value}
