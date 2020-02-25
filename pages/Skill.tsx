@@ -52,6 +52,13 @@ const skills = [
     color: 'primary'
   },
   {
+    title: 'HTML / CSS',
+    className: 'fab fa-html5',
+    rating: 4,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
     title: 'Javascript(ES2015) / JQuery',
     className: 'fab fa-js',
     rating: 4,
@@ -63,13 +70,6 @@ const skills = [
     className: 'fab fa-php',
     rating: 4,
     style: { width: '100%', fontSize: '1200%' },
-    color: 'primary'
-  },
-  {
-    title: 'HTML / CSS',
-    className: 'fab fa-html5',
-    rating: 4,
-    style: { fontSize: '1200%'},
     color: 'primary'
   },
   {
@@ -123,7 +123,7 @@ const classes = useStyles();
     <Box>
       <GridList
         cols={4}
-        spacing={8}
+        spacing={4}
       >
         {skills.map(skill => (
           <GridListTile>

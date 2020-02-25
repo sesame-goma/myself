@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     // '& > *': {
     //   margin: theme.spacing(3),
     // },
+    marginTop: 60,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -37,17 +38,6 @@ const About: NextPage = () => {
 
   return (
     <Box>
-      <Box className={classes.box}>
-        <Avatar
-          src="/goma.png"
-          alt="goma"
-          component="span"
-          className={classes.avatar}
-        />
-        <Typography variant="h1" >
-          Wataru Tatsuda
-        </Typography>
-      </Box>
       <Grid 
         container
         direction="row"
@@ -82,11 +72,30 @@ const About: NextPage = () => {
             <ListItemText primary="人生を危険に晒せ" secondary="Motto" />
           </ListItem>
           <Divider />
+          <ListItem>
+            <ListItemText primary="海外旅行、音楽フェス、麻雀、映画観賞" secondary="Hobby" />
+          </ListItem>
+          <Divider />
           <ListItem divider>
             <ListItemText primary="https://github.com/sesame-goma" secondary="GitHub" />
           </ListItem>
         </List>
       </Grid>
+      <Box className={classes.box}>
+        <Avatar
+          src="/goma.png"
+          alt="goma"
+          component="span"
+          className={classes.avatar}
+        />
+        <Typography 
+          variant="h1" 
+          color="textPrimary"
+          noWrap
+        >
+          Wataru Tatsuda
+        </Typography>
+      </Box>
     </Box>
   );
 };
