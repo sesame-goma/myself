@@ -1,11 +1,9 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { 
-  Avatar,
   Box,
   Icon,
   IconButton,
-  Typography,
   GridList,
   GridListTile,
   GridListTileBar,
@@ -15,12 +13,6 @@ import InfoIcon from '@material-ui/icons/Info';
 import { makeStyles } from '@material-ui/core/styles';
 // d.tsが作られていないライブラリで、自分で作るのも手間なのでこう呼ぶ
 const loader = require('fg-loadcss');
-
-// 内部インポート
-// TODO:firebaseは後回しで
-// import firebaseIcon from 'public/firebase.svg';
-
-
 
 const useStyles = makeStyles(theme => ({
   firebase: {
@@ -33,9 +25,90 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
   },
   infoIcon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
 }));
+
+const skills = [
+  {
+    title: 'React-Native / Next ',
+    className: 'fab fa-react',
+    rating: 5,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'Symfony',
+    className: 'fab fa-symfony',
+    rating: 4,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'Python',
+    className: 'fab fa-python',
+    rating: 2,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'Javascript(ES2015) / JQuery',
+    className: 'fab fa-js',
+    rating: 4,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'PHP',
+    className: 'fab fa-php',
+    rating: 4,
+    style: { width: '100%', fontSize: '1200%' },
+    color: 'primary'
+  },
+  {
+    title: 'HTML / CSS',
+    className: 'fab fa-html5',
+    rating: 4,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'Docker',
+    className: 'fab fa-docker',
+    rating: 2,
+    style: { width: '100%', fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'GitHub',
+    className: 'fab fa-github',
+    rating: 3,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'XD / Photoshop / Illustrator',
+    className: 'fab fa-adobe',
+    rating: 3,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'Linux / Ubuntu ',
+    className: 'fab fa-ubuntu',
+    rating: 3,
+    style: { fontSize: '1200%'},
+    color: 'primary'
+  },
+  {
+    title: 'AWS',
+    className: 'fab fa-aws',
+    rating: 2,
+    style: { width: '100%', fontSize: '1200%' },
+    color: 'primary'
+  },
+  
+]
 
 const Skill: NextPage = () => {
 const classes = useStyles();
@@ -48,24 +121,24 @@ const classes = useStyles();
   })
   return (
     <Box>
-      {/* <Box className={classes.box}> */}
-        <GridList
-          cols={3}
-          spacing={8}
-        >
+      <GridList
+        cols={4}
+        spacing={8}
+      >
+        {skills.map(skill => (
           <GridListTile>
             <Icon
-              className="fab fa-react"
-              style={{ fontSize: '1200%' }}
+              className={skill.className}
+              style={skill.style}
               color="primary"
             />
             <GridListTileBar
-              title="React / Next.js / React-Native"
+              title={skill.title}
               subtitle={
-              <Rating 
-                defaultValue={4}
-                readOnly={true}
-              />
+                <Rating
+                  defaultValue={skill.rating}
+                  readOnly={true}
+                />
               }
               actionIcon={
                 <IconButton className={classes.infoIcon}>
@@ -74,93 +147,29 @@ const classes = useStyles();
               }
             />
           </GridListTile>
-          <GridListTile>
-            <Icon className="fab fa-python" style={{ fontSize: '1200%' }} color="primary" />
-            {/* <img
-              src="/pythonLogo.png"
-              alt="python"
-              className={classes.python}
-            /> */}
-            <GridListTileBar
-              title="Python"
-              subtitle={
-              <Rating 
-                defaultValue={4}
+        ))}
+        <GridListTile>
+          <img
+            src="/firebaseLogo.png"
+            alt="firebase"
+            className={classes.firebase}
+          />
+          <GridListTileBar
+            title="Firebase"
+            subtitle={
+              <Rating
+                defaultValue={3}
                 readOnly={true}
               />
-              }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-          <GridListTile>
-            <Icon className="fab fa-symfony" style={{ fontSize: '1200%' }} color="primary" />
-            <GridListTileBar
-              title="Symfony"
-              subtitle={
-              <Rating 
-                defaultValue={4}
-                readOnly={true}
-              />
-              }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-          <GridListTile>
-            <Icon className="fab fa-github" style={{ fontSize: '1200%' }} color="primary" />
-            <GridListTileBar
-              title="Git / GitHub"
-              subtitle={
-              <Rating 
-                defaultValue={4}
-                readOnly={true}
-              />
-              }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-          <GridListTile>
-            <img
-              src="/firebaseLogo.png"
-              alt="firebase"
-              className={classes.firebase}
-            />
-            <GridListTileBar
-              title="Firebase"
-              subtitle={
-              <Rating 
-                defaultValue={4}
-                readOnly={true}
-              />
-              }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        </GridList>
-        <Icon className="fab fa-html5" color="primary" />
-        <Icon className="fab fa-adobe" color="primary" />
-        <Icon className="fab fa-js" color="primary" />
-        <Icon className="fab fa-docker" color="primary" />
-        {/* なぜかPHPのアイコンだけ見切れてしまうので調整 
-      あとこれ多分style上書きしてるからboxのstyleが当たっていない*/}
-        <Icon className="fab fa-php" style={{ width: '60%' }} color="primary" />
-        <Icon className="fab fa-aws" style={{ width: '60%' }} color="primary" />
-      {/* </Box> */}
+            }
+            actionIcon={
+              <IconButton className={classes.infoIcon}>
+                <InfoIcon />
+              </IconButton>
+            }
+          />
+        </GridListTile>
+      </GridList>
     </Box>
   );
 };

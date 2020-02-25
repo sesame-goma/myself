@@ -9,20 +9,21 @@ import {
   List,
   ListItem,
   ListItemText,
+  Typography,
  } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
   box: {
     display: 'flex',
-    '& > *': {
-      margin: theme.spacing(3),
-    },
-    // justifyContent: 'space-between',
+    // '& > *': {
+    //   margin: theme.spacing(3),
+    // },
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   list: {
-    width: 'auto',
-    backgroundColor: theme.palette.background.paper,
+    width: '100%',
   },
   avatar: {
     width: theme.spacing(20),
@@ -36,19 +37,22 @@ const About: NextPage = () => {
 
   return (
     <Box>
-      <h1>Wataru Tatsuda </h1>
-      {/* <Box className={classes.box}> */}
-      <Grid 
-        container
-        direction="row"
-        alignItems="center"
-      >
+      <Box className={classes.box}>
         <Avatar
           src="/goma.png"
           alt="goma"
           component="span"
           className={classes.avatar}
         />
+        <Typography variant="h1" >
+          Wataru Tatsuda
+        </Typography>
+      </Box>
+      <Grid 
+        container
+        direction="row"
+        alignItems="center"
+      >
         <List 
           component="nav" 
           className={classes.list} 
@@ -83,7 +87,6 @@ const About: NextPage = () => {
           </ListItem>
         </List>
       </Grid>
-      {/* </Box> */}
     </Box>
   );
 };
