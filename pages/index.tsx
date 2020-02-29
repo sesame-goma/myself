@@ -12,8 +12,10 @@ import {
 import { useTheme } from '@material-ui/core/styles';
 
 // 内部インポート
+import Welcome from './Welcome';
 import About from './About';
 import Skill from './Skill';
+import History from './History';
 
 interface TabPanelInterface {
   children: any;
@@ -29,11 +31,11 @@ const TabPanel =  (props: TabPanelInterface) => {
       component="div"
       role="tabpanel"
       hidden={value !== index}
-      id={`full-widht-tabpanel-${index}`}
+      id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box>{children}</Box>}
     </Typography>
   );
 }
@@ -59,7 +61,7 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      <AppBar position="static" color="default">
+      {/* <AppBar position="static" color="default"> */}
         <Tabs
           value={value}
           indicatorColor="primary"
@@ -67,12 +69,13 @@ const Home: NextPage = () => {
           onChange={handleChange}
           variant="fullWidth"
         >
-          <Tab label="About" {...allyProps(0)} />
-          <Tab label="Skill" {...allyProps(1)} />
-          <Tab label="History" {...allyProps(2)} />
-          <Tab label="Contact" {...allyProps(3)} />
+          <Tab label="Welcome" {...allyProps(0)} />
+          <Tab label="About" {...allyProps(1)} />
+          <Tab label="Skill" {...allyProps(2)} />
+          <Tab label="History" {...allyProps(3)} />
+          <Tab label="Contact" {...allyProps(4)} />
         </Tabs>
-      </AppBar>
+      {/* </AppBar> */}
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
@@ -83,21 +86,35 @@ const Home: NextPage = () => {
           index={0}
           dir={theme.direction}
         >
-          <About />
+          <Welcome />
         </TabPanel>
         <TabPanel
           value={value}
           index={1}
           dir={theme.direction}
         >
-          <Skill />
+          <About />
         </TabPanel>
         <TabPanel
           value={value}
           index={2}
           dir={theme.direction}
         >
-          三番目
+          <Skill />
+        </TabPanel>
+        <TabPanel
+          value={value}
+          index={3}
+          dir={theme.direction}
+        >
+          <History />
+        </TabPanel>
+        <TabPanel
+          value={value}
+          index={4}
+          dir={theme.direction}
+        >
+          Contact
         </TabPanel>
       </SwipeableViews>
     </Container>
