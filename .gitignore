@@ -4,6 +4,9 @@
 .next
 .next/
 
+# firebase deploy
+out/
+
 # Logs
 npm-debug.log*
 
