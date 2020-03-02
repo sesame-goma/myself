@@ -43,13 +43,13 @@ const skills = [
     title: 'PHP',
     className: 'fab fa-php',
     rating: 4,
-    style: { color: '#787CB5', width: '100%', fontSize: '1200%', marginLeft: 60 },
+    style: { color: '#787CB5', width: '100%', fontSize: '1200%', marginLeft: 0 },
   },
   {
     title: 'Docker',
     className: 'fab fa-docker',
     rating: 2,
-    style: { color: '#0db7ed', width: '100%', fontSize: '1200%', marginLeft: 60},
+    style: { color: '#0db7ed', width: '100%', fontSize: '1200%', marginLeft: 0},
   },
   {
     title: 'GitHub',
@@ -84,13 +84,12 @@ const useStyles = makeStyles(theme => ({
   gridBox: {
     display: 'flex',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    justifyContent: 'end',
   },
   gridTileBar: {
-    // color: 'blue',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(25, 118, 210, 0.6)',
+    // backgroundColor: 'rgba(25, 118, 210, 0.6)',
     // fontSize: 40,
   },
   aws: {
@@ -191,10 +190,10 @@ const classes = useStyles();
             />
             <GridListTileBar
               className={classes.gridTileBar}
-              title="Firebase"
+              title="AWS"
               subtitle={
                 <Rating
-                  defaultValue={3}
+                  defaultValue={2}
                   readOnly={true}
                 />
               }
