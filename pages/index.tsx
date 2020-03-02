@@ -9,7 +9,7 @@ import {
   Tab,
   Tabs,
  } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 
 // 内部インポート
 import Welcome from './Welcome';
@@ -47,8 +47,26 @@ const allyProps = (index: number) => {
   }
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      // width: '100%',
+      margin: 0,
+      padding: 0,
+      // flex: '1',
+      // justifyContent: 'space-around',
+      // flexWrap: 'wrap',
+      // alignItem: 'center',
+      // justifyContent: 'center',
+      // backgroundPosition: 'center',
+    },
+  }),
+);
+
+
 const Home: NextPage = () => {
   const theme = useTheme();
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (_e: any, newValue: any) => {
@@ -60,8 +78,9 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Container>
-      {/* <AppBar position="static" color="default"> */}
+    <Box className={classes.root}>
+      <AppBar position="static" color="default">
+      <Container maxWidth="md">
         <Tabs
           value={value}
           indicatorColor="primary"
@@ -75,7 +94,8 @@ const Home: NextPage = () => {
           <Tab label="History" {...allyProps(3)} />
           <Tab label="Contact" {...allyProps(4)} />
         </Tabs>
-      {/* </AppBar> */}
+      </Container>
+      </AppBar>
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
@@ -93,21 +113,27 @@ const Home: NextPage = () => {
           index={1}
           dir={theme.direction}
         >
-          <About />
+          <Container maxWidth="md">
+            <About />
+          </Container>
         </TabPanel>
         <TabPanel
           value={value}
           index={2}
           dir={theme.direction}
         >
-          <Skill />
+          <Container maxWidth="md">
+            <Skill />
+          </Container>
         </TabPanel>
         <TabPanel
           value={value}
           index={3}
           dir={theme.direction}
         >
-          <History />
+          <Container maxWidth="md">
+            <History />
+          </Container>
         </TabPanel>
         <TabPanel
           value={value}
@@ -117,7 +143,7 @@ const Home: NextPage = () => {
           Contact
         </TabPanel>
       </SwipeableViews>
-    </Container>
+    </Box>
   );
 }
 

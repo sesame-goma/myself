@@ -1,58 +1,58 @@
 import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { GridList, GridListTile } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+} from '@material-ui/core';
 
-// const Cenote = require('../public/cenote.JPG');
+// 内部インポート
+import cenote from '../public/cenote2m.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      // display: 'flex',
-      // flexWrap: 'wrap',
-      // justifyContent: 'space-around',
-      // overflow: 'hidden',
-      // backgroundColor: theme.palette.background.paper,
-      // backgroundImage: `url('../public/cenote.JPG')`,
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundImage: `url(${cenote})`,
+      backgroundSize: 'cover',
+      width: '100%',
+      height: '93vh',
     },
-    gridList: {
-      width: 500,
-      height: 450,
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      borderBottom: 'solid 3px #fafafa',
+      boxShadow: `5px 0px 0px #303030`,
+    },
+    message: {
+      color: '#fafafa',
+      fontWeight: 'bold',
+      textShadow: `5px 0px 5px #303030`,
     },
   }),
 );
-
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- */
- const tileData = [
-   {
-     img: '/cenote.JPG',
-     title: 'Image',
-     author: 'author',
-     cols: 2,
-   },
-  //  {
-  //    [etc...]
-  //  },
- ];
-
 
 export default function Welcome() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      {/* <GridList cellHeight={160} className={classes.gridList} cols={3}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img} cols={tile.cols || 1}> */}
-            {/* <img src='/cenote.JPG' alt='pn' /> */}
-          {/* </GridListTile>
-        ))}
-      </GridList> */}
-    </div>
+    <Box 
+      className={classes.root}
+    >
+      <Box
+        className={classes.content}
+      >
+        <Typography 
+          variant="h2"
+          className={classes.message} 
+        >
+          Welcome, Wataru Tatsuda Portfolio
+        </Typography>
+      </Box>
+    </Box>
   );
 }
