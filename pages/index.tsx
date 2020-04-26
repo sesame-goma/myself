@@ -122,7 +122,9 @@ const Home: NextPage = () => {
           index={2}
           dir={theme.direction}
         >
-          <Container maxWidth="md">
+          <Container
+            maxWidth="xl"
+          >
             <Skill />
           </Container>
         </TabPanel>

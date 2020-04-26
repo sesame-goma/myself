@@ -3,6 +3,7 @@ import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/s
 import clsx from 'clsx';
 import { 
   Button,
+  Box,
   Stepper, 
   Step,
   StepLabel,
@@ -16,7 +17,7 @@ import { StepIconProps } from '@material-ui/core/StepIcon';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
-    top: 22,
+    top: 0,
   },
   active: {
     '& $line': {
@@ -31,7 +32,7 @@ const ColorlibConnector = withStyles({
     },
   },
   line: {
-    width: 5,
+    width: 10,
     height: 6,
     border: 5,
     backgroundColor: '#eaeaf0',
@@ -90,6 +91,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 30,
       // width: '100%',
     },
+    stepBox: {
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     button: {
       // marginRight: theme.spacing(1),
     },
@@ -136,46 +143,24 @@ export default function History() {
 
   return (
     <div className={classes.root}>
-      <Stepper 
-        activeStep={activeStep} 
-        connector={<ColorlibConnector />}
-        orientation='vertical'
-      >
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
+      {/* <Box className={classes.stepBox}> */}
+        <Stepper
+          activeStep={activeStep}
+          connector={<ColorlibConnector />}
+          orientation='vertical'
+          // className={classes.stepBox}
+        >
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel 
+                StepIconComponent={ColorlibStepIcon}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      {/* </Box> */}
     </div>
   );
 }

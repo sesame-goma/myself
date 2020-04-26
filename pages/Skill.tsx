@@ -43,13 +43,13 @@ const skills = [
     title: 'PHP',
     className: 'fab fa-php',
     rating: 4,
-    style: { color: '#787CB5', width: '100%', fontSize: '1200%', marginLeft: 0 },
+    style: { color: '#787CB5', width: '100%', fontSize: '1200%', marginLeft: '55%'},
   },
   {
     title: 'Docker',
     className: 'fab fa-docker',
     rating: 2,
-    style: { color: '#0db7ed', width: '100%', fontSize: '1200%', marginLeft: 0},
+    style: { color: '#0db7ed', width: '100%', fontSize: '1200%', marginLeft: '55%'},
   },
   {
     title: 'GitHub',
@@ -76,7 +76,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     // スクロール禁止のため
     overflow: 'hidden',
-
   },
   gridTile: {
     marginBottom: theme.spacing(3),
@@ -84,8 +83,8 @@ const useStyles = makeStyles(theme => ({
   gridBox: {
     display: 'flex',
     flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'end',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   gridTileBar: {
     fontWeight: 'bold',
@@ -102,7 +101,7 @@ const useStyles = makeStyles(theme => ({
     height: 190,
   },
   infoIcon: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: 'rgba(255, 255, 255, 0.65)',
   },
 }));
 
@@ -121,7 +120,7 @@ const classes = useStyles();
     >
       <GridList
         cols={3}
-        spacing={4}
+        spacing={12}
         cellHeight={195}
       >
         {skills.map(skill => (
