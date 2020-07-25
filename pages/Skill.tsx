@@ -1,5 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
+import clsx from 'clsx';
 import { 
   Box,
   Icon,
@@ -10,68 +11,64 @@ import {
  } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import InfoIcon from '@material-ui/icons/Info';
-import { makeStyles } from '@material-ui/core/styles';
-// d.tsが作られていないライブラリで、自分で作るのも手間なのでこう呼ぶ
-const loader = require('fg-loadcss');
+import { Theme, makeStyles } from '@material-ui/core/styles';
 
 const skills = [
   {
-    title: 'React-Native / Next ',
+    title: 'React-Native / Next.js',
     className: 'fab fa-react',
     rating: 5,
-    style: { fontSize: '1200%', color: '#61DBFB' },
+    iconStyleAdjuster: { color: '#61DBFB' },
   },
   {
     title: 'Symfony',
     className: 'fab fa-symfony',
     rating: 4,
-    style: { fontSize: '1200%'},
   },
   {
     title: 'HTML / CSS',
     className: 'fab fa-html5',
     rating: 4,
-    style: { color: '#E44D26', fontSize: '1200%'},
+    iconStyleAdjuster: { color: '#E44D26' },
   },
   {
     title: 'Javascript(ES6) / JQuery',
     className: 'fab fa-js',
     rating: 4,
-    style: { color:'#F0DB4F', fontSize: '1200%'},
+    iconStyleAdjuster: { color:'#F0DB4F' },
   },
   {
     title: 'PHP',
     className: 'fab fa-php',
     rating: 4,
-    style: { color: '#787CB5', width: '100%', fontSize: '1200%', marginLeft: '55%'},
+    iconStyleAdjuster: { color: '#787CB5', width: '100%', marginLeft: '20%'},
   },
   {
     title: 'Docker',
     className: 'fab fa-docker',
     rating: 2,
-    style: { color: '#0db7ed', width: '100%', fontSize: '1200%', marginLeft: '55%'},
+    iconStyleAdjuster: { color: '#0db7ed', width: '100%', marginLeft: '30%'},
   },
   {
     title: 'GitHub',
     className: 'fab fa-github',
     rating: 3,
-    style: { fontSize: '1200%'},
   },
   {
     title: 'XD / Photoshop / Illustrator',
     className: 'fab fa-adobe',
     rating: 3,
-    style: { color: '#FF0000', fontSize: '1200%'},
+    iconStyleAdjuster: { color: '#FF0000' },
   },
   {
-    title: 'Linux / Ubuntu ',
+    title: 'Linux / Ubuntu / CoreOS',
     className: 'fab fa-ubuntu',
     rating: 3,
-    style: { color: '#E95420', fontSize: '1200%'},
+    iconStyleAdjuster: { color: '#E95420' },
   },
 ]
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginTop: theme.spacing(3),
     // スクロール禁止のため
@@ -88,7 +85,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridTileBar: {
     fontWeight: 'bold',
-    // backgroundColor: 'rgba(25, 118, 210, 0.6)',
+    backgroundColor: 'rgba(25, 118, 210, 0.4)',
     // fontSize: 40,
   },
   aws: {
@@ -100,39 +97,30 @@ const useStyles = makeStyles(theme => ({
     width: 'auto',
     height: 190,
   },
+  skillIcon: {
+    fontSize: '1200%',
+  },
   infoIcon: {
     color: 'rgba(255, 255, 255, 0.65)',
   },
 }));
 
 const Skill: NextPage = () => {
-const classes = useStyles();
+  const classes = useStyles();
 
-  React.useEffect(() => {
-    loader.loadCSS(
-      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-      document.querySelector('#font-awesome-css'),
-    );
-  })
   return (
-    <Box
-      className={classes.root}
-    >
+    <Box className={classes.root}>
       <GridList
         cols={3}
         spacing={12}
         cellHeight={195}
       >
         {skills.map(skill => (
-          <GridListTile
-            className={classes.gridTile}
-          >
-            <Box
-              className={classes.gridBox}
-            >
+          <GridListTile key={skill.title} className={classes.gridTile}>
+            <Box className={classes.gridBox}>
               <Icon
-                className={skill.className}
-                style={skill.style}
+                className={clsx(skill.className, classes.skillIcon)}
+                style={'iconStyleAdjuster' in skill ? skill.iconStyleAdjuster : {}}
               />
               <GridListTileBar
                 className={classes.gridTileBar}
@@ -153,9 +141,7 @@ const classes = useStyles();
           </GridListTile>
         ))}
         <GridListTile>
-          <Box
-            className={classes.gridBox}
-          >
+          <Box className={classes.gridBox}>
             <img
               src="/pylogo.png"
               alt="python"
@@ -179,9 +165,7 @@ const classes = useStyles();
           </Box>
         </GridListTile>
         <GridListTile>
-          <Box
-            className={classes.gridBox}
-          >
+          <Box className={classes.gridBox}>
             <img
               src="/awslogo.png"
               alt="aws"
@@ -205,9 +189,7 @@ const classes = useStyles();
           </Box>
         </GridListTile>
         <GridListTile>
-          <Box
-            className={classes.gridBox}
-          >
+          <Box className={classes.gridBox}>
             <img
               src="/firebaseLogo.png"
               alt="firebase"
@@ -215,10 +197,10 @@ const classes = useStyles();
             />
             <GridListTileBar
               className={classes.gridTileBar}
-              title="Firebase"
+              title="Firebase / GCP"
               subtitle={
                 <Rating
-                  defaultValue={3}
+                  defaultValue={4}
                   readOnly={true}
                 />
               }

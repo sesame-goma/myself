@@ -1,8 +1,9 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import clsx from 'clsx';
 import { NextPage } from 'next';
 import Typography from '@material-ui/core/Typography';
-import { 
+import {
   AppBar,
   Box,
   Container, 
@@ -11,11 +12,15 @@ import {
  } from '@material-ui/core';
 import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 
+const loader = require('fg-loadcss');
+
 // 内部インポート
 import Welcome from './Welcome';
 import About from './About';
 import Skill from './Skill';
 import History from './History';
+import Contact from './Contact';
+import cenote from '../public/cenote2m.png';
 
 interface TabPanelInterface {
   children: any;
@@ -47,103 +52,95 @@ const allyProps = (index: number) => {
   }
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  const gradient = theme.palette.info;
+  return createStyles({
     root: {
-      // width: '100%',
       margin: 0,
       padding: 0,
-      // flex: '1',
-      // justifyContent: 'space-around',
-      // flexWrap: 'wrap',
-      // alignItem: 'center',
-      // justifyContent: 'center',
-      // backgroundPosition: 'center',
     },
-  }),
-);
+    cenote: {
+      backgroundImage: `url(${cenote})`,
+      backgroundSize: 'cover',
+      width: '100%',
+      height: '98vh',
+    },
+    appBar: {
+      backgroundImage:
+        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
+    },
+    appBarTransparent: {
+      backgroundColor: 'transparent',
+    },
+  });
+});
 
+const tabs = [
+  {
+    'key': 'welcome',
+    'content': <Welcome />,
+  },
+  {
+    'key': 'about',
+    'content': <About />,
+  },
+  {
+    'key': 'skill',
+    'content': <Skill />,
+  },
+  {
+    'key': 'history',
+    'content': <History />,
+  },
+  {
+    'key': 'contact',
+    'content': <Contact />,
+  },
+];
 
 const Home: NextPage = () => {
-  const theme = useTheme();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [selectedTab, setSelectedTab] = React.useState(0);
 
-  const handleChange = (_e: any, newValue: any) => {
-    setValue(newValue);
-  }
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
+  React.useEffect(() => {
+    loader.loadCSS(
+      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
+      document.querySelector('#font-awesome-css'),
+    );
+  });
 
   return (
-    <Box className={classes.root}>
-      <AppBar position="static" color="default">
-      <Container maxWidth="md">
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChange}
-          variant="fullWidth"
-        >
-          <Tab label="Welcome" {...allyProps(0)} />
-          <Tab label="About" {...allyProps(1)} />
-          <Tab label="Skill" {...allyProps(2)} />
-          <Tab label="History" {...allyProps(3)} />
-          <Tab label="Contact" {...allyProps(4)} />
-        </Tabs>
-      </Container>
+    <Box className={selectedTab === 0 ? clsx(classes.root, classes.cenote) : classes.root}>
+      <AppBar
+        position="static"
+        className={selectedTab === 0 ? classes.appBarTransparent : classes.appBar}
+      >
+        <Container maxWidth="md">
+          <Tabs
+            value={selectedTab}
+            onChange={(_e: any, newValue: number) => setSelectedTab(newValue)}
+            variant="fullWidth"
+          >
+            {tabs.map((tab, index) => <Tab key={tab.key} label={tab.key} {...allyProps(index)} />)}
+          </Tabs>
+        </Container>
       </AppBar>
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
+        index={selectedTab}
+        onChangeIndex={(index: number) => setSelectedTab(index)}
       >
-        <TabPanel
-          value={value}
-          index={0}
-          dir={theme.direction}
-        >
-          <Welcome />
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={1}
-          dir={theme.direction}
-        >
-          <Container maxWidth="md">
-            <About />
-          </Container>
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={2}
-          dir={theme.direction}
-        >
-          <Container
-            maxWidth="xl"
-          >
-            <Skill />
-          </Container>
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={3}
-          dir={theme.direction}
-        >
-          <Container maxWidth="md">
-            <History />
-          </Container>
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={4}
-          dir={theme.direction}
-        >
-          Contact
-        </TabPanel>
+        {tabs.map((tab, index) => (
+          <TabPanel value={selectedTab} key={tab.key} index={index} >
+            {selectedTab === 0
+              ? tab.content
+              : (
+                <Container maxWidth='md'>
+                  {tab.content}
+                </Container>
+              )
+            }
+          </TabPanel>
+        ))}
       </SwipeableViews>
     </Box>
   );
