@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
       width: '100vw',
-      height: '98vh',
+      height: '100vh',
     },
     appBar: {
       backgroundImage:
@@ -139,21 +139,16 @@ const Home: React.FunctionComponent<BreakpointInterface> = props => {
       <SwipeableViews
         index={selectedTab}
         onChangeIndex={(index: number) => setSelectedTab(index)}
-        ignoreNativeScroll
+        style={{
+          height: '100vh',
+          top: 0,
+          left: 0,
+          position: 'fixed',
+        }}
       >
         {tabs.map((tab, index) => (
           <TabPanel value={selectedTab} key={tab.key} index={index} >
-            {selectedTab === 0
-              ? tab.content
-              : (
-                <Container
-                  fixed
-                  disableGutters
-                  maxWidth='md'
-                >
-                  {tab.content}
-                </Container>
-              )}
+            {tab.content}
           </TabPanel>
         ))}
       </SwipeableViews>

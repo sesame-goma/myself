@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       justifyContent: 'center',
       backgroundImage: `url(${cenote})`,
       backgroundSize: 'cover',
-      width: '98vw',
-      height: '98vh',
+      width: '100vw',
+      height: '100vh',
     },
     content: {
       display: 'flex',

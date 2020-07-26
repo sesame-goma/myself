@@ -6,6 +6,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Container,
   Stepper,
   Step,
   StepLabel,
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
       marginTop: theme.spacing(5),
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     stepBox: {
       display: 'flex',
