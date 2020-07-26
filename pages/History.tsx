@@ -14,53 +14,57 @@ import {
   Typography,
  } from '@material-ui/core';
 import { StepIconProps } from '@material-ui/core/StepIcon';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
-const loader = require('fg-loadcss');
+import { BreakpointInterface } from './index';
 
-const ColorlibConnector = withStyles(({ palette }) => {
-  const gradient = palette.info;
-  return {
-    active: {
+const useStyles = makeStyles((theme: Theme) => {
+  const gradient = theme.palette.info;
+  const lineWidth = theme.spacing(25);
+  const lineHeight = theme.spacing(0.5);
+
+  const cardWidth = theme.spacing(13);
+  const cardHeight = theme.spacing(70);
+
+  return createStyles({
+    root: {
+      marginTop: theme.spacing(5),
+    },
+    stepBox: {
+      display: 'flex',
+      flex: 1,
+    },
+    stepLabel: {
+      backgroundColor: 'transparent',
+      zIndex: 1,
+    },
+    activeStep: {
       '& $line': {
         // アクティブの時のスタイルを指定すると当たる
         // boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
       },
     },
-    line: {
-      marginTop: 34,
-      width: 200,
-      height: 8,
-      border: 5,
-      borderRadius: 1,
-      backgroundImage:
-        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
+    icon: {
+      color: 'white',
+      marginLeft: '6%',
+      marginBottom: '2%',
     },
-  };
-})(StepConnector);
+    activeIcon: {
+      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    },
 
-const useStyles = makeStyles((theme: Theme) => {
-  const gradient = theme.palette.info;
-  return createStyles({
-    root: {
-      marginTop: 20,
+    // 横向き
+    horStepTitle: {
+      fontWeight: 'bold',
     },
-    stepBox: {
-      display: 'flex',
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    stepper: {
+    horStepper: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'stretch',
     },
-    stepTitle: {
-      fontWeight: 'bold',
-    },
-    captionCard: {
-      width: 100,
-      height: 500,
+    horCaptionCard: {
+      width: cardWidth,
+      height: cardHeight,
       display: 'flex',
       flex: 1,
       justifyContent: 'top',
@@ -68,16 +72,16 @@ const useStyles = makeStyles((theme: Theme) => {
       writingMode: 'vertical-rl',
       textOrientation: 'upright',
     },
-    iconArea: {
-      marginBottom: 50,
+    horIconArea: {
+      marginBottom: theme.spacing(5),
       zIndex: 1,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
     },
-    iconCircle: {
-      marginBottom: 10,
+    horIconCircle: {
+      marginBottom: theme.spacing(1),
       width: 48,
       height: 48,
       borderRadius: '50%',
@@ -87,13 +91,60 @@ const useStyles = makeStyles((theme: Theme) => {
       backgroundImage:
         `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
     },
-    icon: {
-      color: 'white',
-      marginLeft: '6%',
-      marginBottom: '2%',
+    horLine: {
+      marginTop: 34,
+      width: lineWidth,
+      height: lineHeight,
+      border: 5,
+      borderRadius: 1,
+      backgroundImage:
+        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
     },
-    active: {
-      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+  
+    // 縦向き
+    verStepTitle: {
+      fontWeight: 'bold',
+      marginRight: theme.spacing(3),
+    },
+    verStepper: {
+      flexDirection: 'column',
+      justifyContent: 'top',
+      alignItems: 'flex-start',
+    },
+    verCaptionCard: {
+      width: cardHeight / 2.5,
+      height: cardWidth / 2,
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'top',
+      alignItems: 'flex-start',
+    },
+    verIconArea: {
+      marginRight: theme.spacing(3),
+      zIndex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'top',
+      alignItems: 'center',
+    },
+    verIconCircle: {
+      width: 48,
+      height: 48,
+      borderRadius: '50%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundImage:
+        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
+    },
+    verLine: {
+      marginLeft: 21,
+      width: lineHeight,
+      height: lineWidth / 4,
+      border: 5,
+      borderRadius: 1,
+      backgroundImage:
+        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
     },
   });
 });
@@ -154,18 +205,20 @@ const steps = [
   },
 ];
 
-const History = () => {
+const History: React.FunctionComponent<BreakpointInterface> = props => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const isStepHorizontal = isWidthUp('sm', props.width);
+
   return (
     <div className={classes.root}>
       <Box className={classes.stepBox}>
         <Stepper
-          activeStep={activeStep}
-          connector={<ColorlibConnector />}
-          className={classes.stepper}
-          nonLinear
-          alternativeLabel
+          orientation={isStepHorizontal ? 'horizontal' : 'vertical'}
+          activeStep={isStepHorizontal ? activeStep : steps.length + 1}
+          connector={<StepConnector className={isStepHorizontal ? classes.horLine : classes.verLine} />}
+          className={isStepHorizontal ? classes.horStepper : classes.verStepper}
+          alternativeLabel={isStepHorizontal}
         >
           {steps.map((item, index) => (
             <Step
@@ -176,27 +229,43 @@ const History = () => {
                 StepIconComponent={(props: StepIconProps) => {
                   const { active } = props;
                   return (
-                    <div className={classes.iconArea}>
-                      <Typography variant='subtitle1' className={classes.stepTitle}>
+                    <div className={isStepHorizontal ? classes.horIconArea : classes.verIconArea}>
+                      {isStepHorizontal &&
+                      <Typography variant='subtitle1' className={classes.horStepTitle}>
                         {item.title}
-                      </Typography>
-                      <div className={clsx(classes.iconCircle, { [classes.active]: active })}>
+                      </Typography>}
+                      <div className={clsx(
+                        isStepHorizontal ? classes.horIconCircle : classes.verIconCircle,
+                        { [classes.activeIcon]: active }
+                      )}>
                         <Icon
                           className={clsx(item.className, classes.icon)}
                           style={'iconStyleAdjuster' in item ? item.iconStyleAdjuster : {}}
                         />
                       </div>
+                      {isStepHorizontal &&
                       <Typography variant='subtitle1'>
                         {item.duration}
-                      </Typography>
+                      </Typography>}
                     </div>
                   );
                 }}
+                className={classes.stepLabel}
               >
+                {!isStepHorizontal && (
+                  <Box>
+                    <Typography display='inline' variant='subtitle2' className={classes.verStepTitle}>
+                      {item.title}
+                    </Typography>
+                    <Typography display='inline' variant='subtitle2'>
+                      {item.duration}
+                    </Typography>
+                  </Box>
+                )}
                 <Card >
                   <CardActionArea>
-                    <CardContent className={classes.captionCard}>
-                      <Typography variant='subtitle2'>
+                    <CardContent className={isStepHorizontal ? classes.horCaptionCard : classes.verCaptionCard}>
+                      <Typography variant={isStepHorizontal ? 'subtitle2' : 'caption'}>
                         {item.caption}
                       </Typography>
                     </CardContent>
@@ -210,4 +279,4 @@ const History = () => {
     </div>
   );
 }
-export default History;
+export default withWidth()(History);

@@ -1,7 +1,6 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
-import { NextPage } from 'next';
 import Typography from '@material-ui/core/Typography';
 import {
   AppBar,
@@ -10,7 +9,9 @@ import {
   Tab,
   Tabs,
  } from '@material-ui/core';
-import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 const loader = require('fg-loadcss');
 
@@ -20,7 +21,6 @@ import About from './About';
 import Skill from './Skill';
 import History from './History';
 import Contact from './Contact';
-import cenote from '../public/cenote2m.png';
 
 interface TabPanelInterface {
   children: any;
@@ -35,12 +35,13 @@ const TabPanel =  (props: TabPanelInterface) => {
     <Typography
       component="div"
       role="tabpanel"
-      hidden={value !== index}
+      // hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && <Box>{children}</Box>}
+      <Box>{children}</Box>
+      {/* value === index && <Box>{children}</Box> */}
     </Typography>
   );
 }
@@ -56,21 +57,25 @@ const useStyles = makeStyles((theme: Theme) => {
   const gradient = theme.palette.info;
   return createStyles({
     root: {
-      margin: 0,
-      padding: 0,
-    },
-    cenote: {
-      backgroundImage: `url(${cenote})`,
-      backgroundSize: 'cover',
-      width: '100%',
+      width: '100vw',
       height: '98vh',
     },
     appBar: {
       backgroundImage:
-        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
+        `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     appBarTransparent: {
       backgroundColor: 'transparent',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    footAppBar: {
+      top: 'auto',
+      bottom: 0,
     },
   });
 });
@@ -98,9 +103,14 @@ const tabs = [
   },
 ];
 
-const Home: NextPage = () => {
+export interface BreakpointInterface {
+  width: Breakpoint,
+};
+
+const Home: React.FunctionComponent<BreakpointInterface> = props => {
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
+  const isTopAppBar = isWidthUp('sm', props.width);
 
   React.useEffect(() => {
     loader.loadCSS(
@@ -110,35 +120,40 @@ const Home: NextPage = () => {
   });
 
   return (
-    <Box className={selectedTab === 0 ? clsx(classes.root, classes.cenote) : classes.root}>
+    <Box>
       <AppBar
-        position="static"
-        className={selectedTab === 0 ? classes.appBarTransparent : classes.appBar}
+        position='fixed'
+        className={clsx(
+          selectedTab === 0 ? classes.appBarTransparent : classes.appBar,
+          !isTopAppBar && classes.footAppBar,
+        )}
       >
-        <Container maxWidth="md">
-          <Tabs
-            value={selectedTab}
-            onChange={(_e: any, newValue: number) => setSelectedTab(newValue)}
-            variant="fullWidth"
-          >
-            {tabs.map((tab, index) => <Tab key={tab.key} label={tab.key} {...allyProps(index)} />)}
-          </Tabs>
-        </Container>
+        <Tabs
+          value={selectedTab}
+          onChange={(_e: any, newValue: number) => setSelectedTab(newValue)}
+          variant="scrollable"
+        >
+          {tabs.map((tab, index) => <Tab key={tab.key} label={tab.key} {...allyProps(index)} />)}
+        </Tabs>
       </AppBar>
       <SwipeableViews
         index={selectedTab}
         onChangeIndex={(index: number) => setSelectedTab(index)}
+        ignoreNativeScroll
       >
         {tabs.map((tab, index) => (
           <TabPanel value={selectedTab} key={tab.key} index={index} >
             {selectedTab === 0
               ? tab.content
               : (
-                <Container maxWidth='md'>
+                <Container
+                  fixed
+                  disableGutters
+                  maxWidth='md'
+                >
                   {tab.content}
                 </Container>
-              )
-            }
+              )}
           </TabPanel>
         ))}
       </SwipeableViews>
@@ -146,4 +161,4 @@ const Home: NextPage = () => {
   );
 }
 
-export default Home;
+export default withWidth()(Home);

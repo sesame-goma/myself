@@ -1,12 +1,14 @@
 import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { 
-  Twitter as TwitterIcon,
+  Facebook as FacebookIcon,
   GitHub as GitHubIcon,
+  Twitter as TwitterIcon,
 } from '@material-ui/icons';
 import {
   Box,
   Divider,
+  Link,
   List,
   ListItem,
   ListItemText,
@@ -16,29 +18,44 @@ import {
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
+      marginTop: theme.spacing(10),
       display: 'flex',
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'space-evenly',
-      width: '100%',
-      height: '93vh',
+      justifyContent: 'top',
     },
     message: {
       fontWeight: 'bold',
-      marginLeft: 30,
-      // color: '#fafafa',
-      // textShadow: `5px 0px 5px #303030`,
+      marginBottom: theme.spacing(10),
     },
     list: {
       width: '100%',
     },
     link: {
-
+      marginLeft: theme.spacing(5),
     },
     twitter: {
       color: '#1DA1F2',
-    }
+    },
+    github: {
+      color: '#333',
+    },
+    facebook: {
+      color: '#4267B2',
+    },
+    qiita: {
+      widht: 26,
+      height: 26,
+    },
+    chatwork: {
+      widht: 26,
+      height: 26,
+    },
+    speakerDeck: {
+      widht: 18,
+      height: 18,
+    },
   }),
 );
 
@@ -48,10 +65,10 @@ const Contact = () => {
   return (
     <Box className={classes.root}>
       <Typography 
-        variant="h5"
+        variant="h6"
         className={classes.message} 
       >
-        お問い合わせ、お仕事の連絡はTwitterのDMまで
+        お問い合わせはTwitterのDMまで
       </Typography>
       <List
         component="nav"
@@ -67,27 +84,131 @@ const Contact = () => {
                 variant="subtitle1"
                 className={classes.link} 
               >
-                https://twitter.com/sesame_apps
+                <Link
+                  href='https://twitter.com/sesame_apps'
+                  target='_blank'
+                  rel='noopener'
+                >
+                  Twitter
+                </Link>
               </Typography>
             }
-            secondary="Twitter"
           />
         </ListItem>
         <Divider />
         <ListItem>
           <ListItemIcon>
-            <GitHubIcon />
+            <GitHubIcon className={classes.github} />
           </ListItemIcon>
           <ListItemText
-            primary="https://github.com/sesame-goma"
-            secondary="GitHub"
+            primary={
+              <Typography 
+                variant="subtitle1"
+                className={classes.link} 
+              >
+                <Link
+                  href='https://github.com/sesame-goma'
+                  target='_blank'
+                  rel='noopener'
+                >
+                  GitHub
+                </Link>
+              </Typography>
+            }
           />
         </ListItem>
         <Divider />
         <ListItem>
+          <ListItemIcon>
+            <FacebookIcon className={classes.facebook} />
+          </ListItemIcon>
           <ListItemText
-            primary="株式会社ファーストロジック"
-            secondary="Company"
+            primary={
+              <Typography 
+                variant="subtitle1"
+                className={classes.link} 
+              >
+                <Link
+                  href='https://www.facebook.com/profile.php?id=100015748086019'
+                  target='_blank'
+                  rel='noopener'
+                >
+                  Facebook
+                </Link>
+              </Typography>
+            }
+          />
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemIcon>
+            <img
+              src="/qiitaLogo.png"
+              alt="qiita"
+              className={classes.qiita}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography 
+                variant="subtitle1"
+                className={classes.link} 
+              >
+                <Link
+                  href='https://qiita.com/sesame_apps'
+                  target='_blank'
+                  rel='noopener'
+                >
+                  Qiita
+                </Link>
+              </Typography>
+            }
+          />
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemIcon>
+            <img
+              src="/chatworkLogo.png"
+              alt="chatowork"
+              className={classes.chatwork}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography 
+                variant="subtitle1"
+                className={classes.link} 
+              >
+                ChatworkID:sesame_apps
+              </Typography>
+            }
+          />
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemIcon>
+            <img
+              src="/speakerdeckLogo.png"
+              alt="SpeakerDeck"
+              className={classes.speakerDeck}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography 
+                variant="subtitle1"
+                className={classes.link} 
+              >
+                <Link
+                  href='https://speakerdeck.com/sesameapps'
+                  target='_blank'
+                  rel='noopener'
+                >
+                  SpeakerDeck
+                </Link>
+              </Typography>
+            }
           />
         </ListItem>
         <Divider />

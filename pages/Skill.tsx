@@ -1,5 +1,4 @@
 import React from 'react';
-import { NextPage } from 'next';
 import clsx from 'clsx';
 import { 
   Box,
@@ -12,6 +11,9 @@ import {
 import { Rating } from '@material-ui/lab';
 import InfoIcon from '@material-ui/icons/Info';
 import { Theme, makeStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+
+import { BreakpointInterface } from './index';
 
 const skills = [
   {
@@ -41,13 +43,13 @@ const skills = [
     title: 'PHP',
     className: 'fab fa-php',
     rating: 4,
-    iconStyleAdjuster: { color: '#787CB5', width: '100%', marginLeft: '20%'},
+    iconStyleAdjuster: { color: '#787CB5', width: '100%', marginLeft: '25%'},
   },
   {
     title: 'Docker',
     className: 'fab fa-docker',
     rating: 2,
-    iconStyleAdjuster: { color: '#0db7ed', width: '100%', marginLeft: '30%'},
+    iconStyleAdjuster: { color: '#0db7ed', width: '100%', marginLeft: '35%'},
   },
   {
     title: 'GitHub',
@@ -70,9 +72,12 @@ const skills = [
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(5),
     // スクロール禁止のため
     overflow: 'hidden',
+  },
+  bottomAdjuster: {
+    marginBottom: theme.spacing(5),
   },
   gridTile: {
     marginBottom: theme.spacing(3),
@@ -86,7 +91,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   gridTileBar: {
     fontWeight: 'bold',
     backgroundColor: 'rgba(25, 118, 210, 0.4)',
-    // fontSize: 40,
   },
   aws: {
     marginTop: 30,
@@ -98,20 +102,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 190,
   },
   skillIcon: {
-    fontSize: '1200%',
+    fontSize: theme.spacing(23),
   },
   infoIcon: {
     color: 'rgba(255, 255, 255, 0.65)',
   },
 }));
 
-const Skill: NextPage = () => {
+
+const Skill: React.FunctionComponent<BreakpointInterface> = props => {
   const classes = useStyles();
+  const getGridListCols = () => {
+    // 指定以下の画面サイズはfalse、指定以上ならtrue
+    if (isWidthUp('lg', props.width)) return 3;
+    if (isWidthUp('md', props.width)) return 2;
+    return 1;
+  }
 
   return (
-    <Box className={classes.root}>
+    <Box className={clsx(classes.root,
+      !isWidthUp('sm', props.width) && classes.bottomAdjuster)}>
       <GridList
-        cols={3}
+        cols={getGridListCols()}
         spacing={12}
         cellHeight={195}
       >
@@ -188,7 +200,7 @@ const Skill: NextPage = () => {
             />
           </Box>
         </GridListTile>
-        <GridListTile>
+        <GridListTile >
           <Box className={classes.gridBox}>
             <img
               src="/firebaseLogo.png"
@@ -217,4 +229,4 @@ const Skill: NextPage = () => {
   );
 };
 
-export default Skill;
+export default withWidth()(Skill);

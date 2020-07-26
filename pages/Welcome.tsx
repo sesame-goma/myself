@@ -5,14 +5,16 @@ import {
   Typography,
 } from '@material-ui/core';
 
+import cenote from '../public/cenote2m.png';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
       display: 'flex',
-      flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100%',
-      height: '93vh',
+      backgroundImage: `url(${cenote})`,
+      backgroundSize: 'cover',
+      width: '98vw',
+      height: '98vh',
     },
     content: {
       display: 'flex',
@@ -35,12 +37,12 @@ const Welcome = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.content}>
-        <Typography 
+        <Typography
           variant="h2"
-          className={classes.message} 
+          className={classes.message}
         >
           Welcome, Wataru Tatsuda Portfolio
-        </Typography>
+          </Typography>
       </Box>
     </Box>
   );
