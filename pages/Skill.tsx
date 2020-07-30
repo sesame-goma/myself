@@ -7,6 +7,7 @@ import {
   GridList,
   GridListTile,
   GridListTileBar,
+  Container,
  } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import InfoIcon from '@material-ui/icons/Info';
@@ -14,6 +15,7 @@ import { Theme, makeStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import { BreakpointInterface } from './index';
+import TabTitle from './components/TabTitle';
 
 const skills = [
   {
@@ -72,9 +74,15 @@ const skills = [
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginTop: theme.spacing(5),
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
     // スクロール禁止のため
     overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomAdjuster: {
     marginBottom: theme.spacing(5),
@@ -91,6 +99,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   gridTileBar: {
     fontWeight: 'bold',
     backgroundColor: 'rgba(25, 118, 210, 0.4)',
+    borderRadius: 5,
+    // backgroundColor: 'rgba(244, 244, 244, 0.8)',
   },
   aws: {
     marginTop: 30,
@@ -120,8 +130,12 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
   }
 
   return (
-    <Box className={clsx(classes.root,
-      !isWidthUp('sm', props.width) && classes.bottomAdjuster)}>
+    <Container
+      maxWidth='md'
+      className={clsx(classes.root,
+        !isWidthUp('sm', props.width) && classes.bottomAdjuster)}
+    >
+      <TabTitle title={'Skill'} />
       <GridList
         cols={getGridListCols()}
         spacing={12}
@@ -225,7 +239,7 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
           </Box>
         </GridListTile>
       </GridList>
-    </Box>
+    </Container>
   );
 };
 

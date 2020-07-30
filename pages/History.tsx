@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { 
   Box,
@@ -18,26 +18,27 @@ import { StepIconProps } from '@material-ui/core/StepIcon';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import { BreakpointInterface } from './index';
+import TabTitle from './components/TabTitle';
 
 const useStyles = makeStyles((theme: Theme) => {
   const gradient = theme.palette.info;
-  const lineWidth = theme.spacing(25);
+  const lineWidth = theme.spacing(30);
   const lineHeight = theme.spacing(0.5);
 
-  const cardWidth = theme.spacing(13);
+  const cardWidth = theme.spacing(10);
   const cardHeight = theme.spacing(70);
 
   return createStyles({
     root: {
-      marginTop: theme.spacing(5),
+      paddingTop: theme.spacing(10),
+      paddingBottom: theme.spacing(10),
       display: 'flex',
+      flexDirection: 'column',
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'start',
       alignItems: 'center',
     },
     stepBox: {
-      display: 'flex',
-      flex: 1,
     },
     stepLabel: {
       backgroundColor: 'transparent',
@@ -55,14 +56,15 @@ const useStyles = makeStyles((theme: Theme) => {
       marginBottom: '2%',
     },
     activeIcon: {
-      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+      boxShadow: '0 2px 5px 0 rgba(0,0,0,.25)',
     },
 
-    // 横向き
+    // PC・タブレット
     horStepTitle: {
       fontWeight: 'bold',
     },
     horStepper: {
+      backgroundColor: 'transparent',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'stretch',
@@ -71,8 +73,7 @@ const useStyles = makeStyles((theme: Theme) => {
       width: cardWidth,
       height: cardHeight,
       display: 'flex',
-      flex: 1,
-      justifyContent: 'top',
+      justifyContent: 'start',
       alignItems: 'center',
       writingMode: 'vertical-rl',
       textOrientation: 'upright',
@@ -106,30 +107,32 @@ const useStyles = makeStyles((theme: Theme) => {
         `linear-gradient(135deg, ${gradient.light} 0%, ${gradient.main} 50%, ${gradient.dark} 100%);`
     },
   
-    // 縦向き
+    // スマホ
     verStepTitle: {
       fontWeight: 'bold',
+      marginLeft: theme.spacing(2),
       marginRight: theme.spacing(3),
     },
     verStepper: {
+      backgroundColor: 'transparent',
       flexDirection: 'column',
-      justifyContent: 'top',
+      justifyContent: 'start',
       alignItems: 'flex-start',
     },
     verCaptionCard: {
-      width: cardHeight / 2.5,
-      height: cardWidth / 2,
+      width: cardHeight / 2,
+      height: cardWidth * 1.5,
       display: 'flex',
-      flex: 1,
-      justifyContent: 'top',
-      alignItems: 'flex-start',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'start',
     },
     verIconArea: {
-      marginRight: theme.spacing(3),
+      marginRight: theme.spacing(2),
       zIndex: 1,
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'top',
+      justifyContent: 'start',
       alignItems: 'center',
     },
     verIconCircle: {
@@ -154,91 +157,131 @@ const useStyles = makeStyles((theme: Theme) => {
   });
 });
 
-const steps = [
-  {
-    title: '幼少期',
-    duration: '1996年〜2003年',
-    caption: (<div>
-      <p>実家のピアノを勝手に引くのが好きで、ピアノを習い始めた。</p>
-    </div>),
-    className: 'fas fa-baby',
-    iconStyleAdjuster: { marginLeft: '10%' }
-  },
-  {
-    title: '小学生',
-    duration: '2003年〜2009年',
-    caption: (<div>
-      <p>ワールドカップで見たブラジルの選手に憧れて、サッカー少年団に所属。</p>
-    </div>),
-    className: 'fas fa-child',
-    iconStyleAdjuster: { marginLeft: '10%' }
-  },
-  {
-    title: '中学生',
-    duration: '2009年〜2012年',
-    caption: (<div>
-      <p>野球にハマって、野球部に入部。当時の仲間とバンドを組んでいた。</p>
-    </div>),
-    className: 'fas fa-running',
-  },
-  {
-    title: '高校生',
-    duration: '2012年〜2015年',
-    caption: (<div>
-      <p>中学の友人たちとハンドボール部に入部。3年生から真面目に勉強し始めた。</p>
-    </div>),
-    className: 'fas fa-user-edit',
-    iconStyleAdjuster: { width: '100%', marginLeft: '40%' }
-  },
-  {
-    title: '大学生',
-    duration: '2015年〜2019年',
-    caption: (<div>
-      <p>エルサルバドルで遺跡を発掘。土器のデータ分析で卒論を書いた。</p>
-      <p>麻雀で全国大会準優勝した。</p>
-    </div>),
-    className: 'fas fa-user-graduate',
-  },
-  {
-    title: '社会人',
-    duration: '2019年〜現在',
-    caption: (<div>
-      <p>WEB系エンジニアになる。</p>
-    </div>),
-    // className: 'fas fa-laptop-code',
-    className: 'fas fa-user-tie',
-  },
-];
+interface StepInterface {
+  title: string,
+  duration: string,
+  caption: any,
+  className: string,
+  iconStyleAdjuster?: object,
+};
+
+const steps = () => {
+  const capStyle = {
+    'display': 'flex',
+    'flex-direction': 'column',
+    'align-items': 'start',
+  };
+  return [
+    {
+      title: '幼少期',
+      duration: '1996〜2003年',
+      caption: (
+        <span style={capStyle}>
+          <span>実家のピアノを勝手に引くのが好きで、ピアノを習い始めた。</span>
+          <span>妹が1人いる長男。親戚の中で一番最初の子供だった。</span>
+          <span>そのせいか、お爺ちゃんに玉のように可愛がられて育った。</span>
+        </span>
+      ),
+      className: 'fas fa-baby',
+      iconStyleAdjuster: { marginLeft: '10%' }
+    },
+    {
+      title: '小学生',
+      duration: '2003〜2009年',
+      caption: (
+        <span style={capStyle}>
+          <span>ワールドカップで見たブラジルの選手に憧れて、サッカー少年団に所属。</span>
+          <span>学芸会では5年連続悪役を任された。なぜだ...</span>
+          <span>あとは年頃の子供らしく、ゲームでよく遊んでいた記憶がある。</span>
+        </span>
+      ),
+      className: 'fas fa-child',
+      iconStyleAdjuster: { marginLeft: '10%' }
+    },
+    {
+      title: '中学生',
+      duration: '2009〜2012年',
+      caption: (
+        <span style={capStyle}>
+          <span>野球にハマって、野球部に入部。当時の部活仲間とバンドを組んでいた。</span>
+          <span>好きな音楽はロックで、当時聴いていたバンドは今でもずっと聴いている。</span>
+          <span>3年生の時、親に塾に入れられてから勉強を始めた...。</span>
+        </span>
+      ),
+      className: 'fas fa-running',
+    },
+    {
+      title: '高校生',
+      duration: '2012〜2015年',
+      caption: (
+        <span style={capStyle}>
+          <span>中学の友人たちとハンドボール部に入部。しかし顧問と喧嘩して2年生で退部...。</span>
+          <span>世界史が好きで、「大学でマヤ文明の研究をしたい」と名古屋大学を志す。</span>
+          <span>しかし、結局勉強を始めたのは3年生になってから...汗</span>
+        </span>
+      ),
+      className: 'fas fa-user-edit',
+      iconStyleAdjuster: { width: '100%', marginLeft: '40%' }
+    },
+    {
+      title: '大学生',
+      duration: '2015〜2019年',
+      caption: (
+        <span style={capStyle}>
+          <span>考古学を専攻し、エルサルバドルで遺跡を発掘していた。※スペイン語が少し話せます</span>
+          <span>麻雀サークルに所属し、１年生の時全国大会で準優勝した。</span>
+          <span>他にはバンドサークルでギターボーカルを経験した。</span>
+        </span>
+      ),
+      className: 'fas fa-user-graduate',
+    },
+    {
+      title: '社会人',
+      duration: '2019年〜現在',
+      caption: (
+        <span style={capStyle}>
+          <span>株式会社ファーストロジックに新卒として入社。WEB系エンジニアになる。</span>
+          <span>新卒入社から1年半で、エンジニアとして3回社長賞を受賞した。</span>
+          <span>直近では、スマホアプリにビデオ通話機能を追加する開発を行った。</span>
+        </span>
+      ),
+      className: 'fas fa-user-tie',
+    },
+  ];
+};
 
 const History: React.FunctionComponent<BreakpointInterface> = props => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const isStepHorizontal = isWidthUp('sm', props.width);
+  const history: Array<StepInterface> = steps();
 
   return (
-    <div className={classes.root}>
+    <Container className={classes.root}>
+      <TabTitle title={'History'} />
       <Box className={classes.stepBox}>
         <Stepper
           orientation={isStepHorizontal ? 'horizontal' : 'vertical'}
-          activeStep={isStepHorizontal ? activeStep : steps.length + 1}
+          activeStep={isStepHorizontal ? activeStep : history.length + 1}
           connector={<StepConnector className={isStepHorizontal ? classes.horLine : classes.verLine} />}
           className={isStepHorizontal ? classes.horStepper : classes.verStepper}
           alternativeLabel={isStepHorizontal}
         >
-          {steps.map((item, index) => (
+          {history.map((item: StepInterface, index: number) => (
             <Step
               key={item.title}
               onMouseOver={() => setActiveStep(index)}
             >
-              <StepLabel 
+              <StepLabel
                 StepIconComponent={(props: StepIconProps) => {
                   const { active } = props;
                   return (
                     <div className={isStepHorizontal ? classes.horIconArea : classes.verIconArea}>
                       {isStepHorizontal &&
-                      <Typography variant='subtitle1' className={classes.horStepTitle}>
-                        {item.title}
-                      </Typography>}
+                        <Typography variant='subtitle1' className={classes.horStepTitle}>
+                          {item.title}
+                        </Typography>
+                      }
                       <div className={clsx(
                         isStepHorizontal ? classes.horIconCircle : classes.verIconCircle,
                         { [classes.activeIcon]: active }
@@ -249,9 +292,10 @@ const History: React.FunctionComponent<BreakpointInterface> = props => {
                         />
                       </div>
                       {isStepHorizontal &&
-                      <Typography variant='subtitle1'>
-                        {item.duration}
-                      </Typography>}
+                        <Typography variant='subtitle1'>
+                          {item.duration}
+                        </Typography>
+                      }
                     </div>
                   );
                 }}
@@ -267,7 +311,7 @@ const History: React.FunctionComponent<BreakpointInterface> = props => {
                     </Typography>
                   </Box>
                 )}
-                <Card >
+                <Card>
                   <CardActionArea>
                     <CardContent className={isStepHorizontal ? classes.horCaptionCard : classes.verCaptionCard}>
                       <Typography variant={isStepHorizontal ? 'subtitle2' : 'caption'}>
@@ -281,7 +325,7 @@ const History: React.FunctionComponent<BreakpointInterface> = props => {
           ))}
         </Stepper>
       </Box>
-    </div>
+    </Container>
   );
 }
 export default withWidth()(History);

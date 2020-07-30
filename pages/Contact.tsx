@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { 
   Facebook as FacebookIcon,
@@ -7,27 +8,36 @@ import {
 } from '@material-ui/icons';
 import {
   Box,
+  Container,
   Divider,
   Link,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
+  Icon,
   Typography,
 } from '@material-ui/core';
 
+import TabTitle from './components/TabTitle';
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
-      marginTop: theme.spacing(10),
+      paddingTop: theme.spacing(10),
+      paddingBottom: theme.spacing(10),
       display: 'flex',
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'top',
+      justifyContent: 'center',
     },
     message: {
-      fontWeight: 'bold',
-      marginBottom: theme.spacing(10),
+      marginTop: theme.spacing(10),
+    },
+    mailIcon: {
+      fontSize: theme.spacing(3),
+      color: theme.palette.secondary.main,
+      marginLeft: theme.spacing(1),
     },
     list: {
       width: '100%',
@@ -63,13 +73,8 @@ const Contact = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      <Typography 
-        variant="h6"
-        className={classes.message} 
-      >
-        お問い合わせはTwitterのDMまで
-      </Typography>
+    <Container maxWidth='md' className={classes.root}>
+      <TabTitle title={'Contact'} />
       <List
         component="nav"
         className={classes.list}
@@ -213,7 +218,14 @@ const Contact = () => {
         </ListItem>
         <Divider />
       </List>
-    </Box>
+      <Typography 
+        variant="subtitle1"
+        className={classes.message} 
+      >
+        お問い合わせはTwitterのDMまで
+        <Icon className={clsx('far fa-paper-plane', classes.mailIcon)} />
+      </Typography>
+    </Container>
   );
 }
 export default Contact;

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { cloneElement, useEffect, useRef } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
-import Typography from '@material-ui/core/Typography';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import {
   AppBar,
   Box,
-  Container, 
   Tab,
   Tabs,
+  Typography,
+  Zoom,
  } from '@material-ui/core';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
@@ -27,6 +28,7 @@ interface TabPanelInterface {
   value: any;
   index: number;
   dir?: any;
+  className?: any;
 }
 
 const TabPanel =  (props: TabPanelInterface) => {
@@ -34,7 +36,7 @@ const TabPanel =  (props: TabPanelInterface) => {
   return (
     <Typography
       component="div"
-      role="tabpanel"
+      // role="tabpanel"
       // hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
@@ -49,7 +51,6 @@ const TabPanel =  (props: TabPanelInterface) => {
 const allyProps = (index: number) => {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controles': `full-width-tabpanel-${index}`
   }
 };
 
@@ -57,8 +58,9 @@ const useStyles = makeStyles((theme: Theme) => {
   const gradient = theme.palette.info;
   return createStyles({
     root: {
-      width: '100vw',
-      height: '100vh',
+      position: 'absolute',
+      top: 0,
+      left: 0,
     },
     appBar: {
       backgroundImage:
@@ -76,6 +78,9 @@ const useStyles = makeStyles((theme: Theme) => {
     footAppBar: {
       top: 'auto',
       bottom: 0,
+    },
+    odd: {
+      backgroundColor: '#f5f5f5',
     },
   });
 });
@@ -103,16 +108,66 @@ const tabs = [
   },
 ];
 
+
+
+const ScrollTop: React.FC<FCInterface> = props => {
+  const classes = useStyles();
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const anchor = ((event.target as HTMLDivElement).ownerDocument || document).querySelector(
+      '#back-to-top-anchor',
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  cloneElement(props.children, {
+    elevation: trigger ? 4 : 0,
+  });
+  return (
+    <Zoom in={trigger}>
+      <div onClick={handleClick} role="presentation" className={classes.root}>
+        {props.children}
+      </div>
+    </Zoom>
+  );
+}
+
+
+export interface FCInterface {
+  children: React.ReactElement,
+};
+
 export interface BreakpointInterface {
   width: Breakpoint,
 };
 
-const Home: React.FunctionComponent<BreakpointInterface> = props => {
+const Home: React.FC<BreakpointInterface> = props => {
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = React.useState(0);
-  const isTopAppBar = isWidthUp('sm', props.width);
 
-  React.useEffect(() => {
+  const AppBarColorChanger: React.FC<FCInterface> = ({ children }) => {
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 100,
+    });
+
+    return cloneElement(children, {
+      className: clsx(
+        !isWidthUp('sm', props.width) && classes.footAppBar,
+        trigger ? classes.appBar : classes.appBarTransparent,
+      ),
+    });
+  }
+  // const scroll = (ref) => ref.current.scrollIntoView({ behavior: 'smooth' })
+
+  useEffect(() => {
     loader.loadCSS(
       'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
       document.querySelector('#font-awesome-css'),
@@ -120,38 +175,28 @@ const Home: React.FunctionComponent<BreakpointInterface> = props => {
   });
 
   return (
-    <Box>
-      <AppBar
-        position='fixed'
-        className={clsx(
-          selectedTab === 0 ? classes.appBarTransparent : classes.appBar,
-          !isTopAppBar && classes.footAppBar,
-        )}
-      >
-        <Tabs
+    <Box className={classes.root}>
+      <AppBarColorChanger>
+        <AppBar>
+          <Tabs
+            value={selectedTab}
+            onChange={(_e: any, newValue: number) => setSelectedTab(newValue)}
+            variant="scrollable"
+          >
+            {tabs.map((tab, index) => <Tab key={tab.key} label={tab.key} {...allyProps(index)} />)}
+          </Tabs>
+        </AppBar>
+      </AppBarColorChanger>
+      {tabs.map((tab, index) => (
+        <TabPanel
+          className={index % 2 !== 0 ? classes.odd : ''}
           value={selectedTab}
-          onChange={(_e: any, newValue: number) => setSelectedTab(newValue)}
-          variant="scrollable"
+          key={tab.key}
+          index={index}
         >
-          {tabs.map((tab, index) => <Tab key={tab.key} label={tab.key} {...allyProps(index)} />)}
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        index={selectedTab}
-        onChangeIndex={(index: number) => setSelectedTab(index)}
-        style={{
-          height: '100vh',
-          top: 0,
-          left: 0,
-          position: 'fixed',
-        }}
-      >
-        {tabs.map((tab, index) => (
-          <TabPanel value={selectedTab} key={tab.key} index={index} >
-            {tab.content}
-          </TabPanel>
-        ))}
-      </SwipeableViews>
+          {tab.content}
+        </TabPanel>
+      ))}
     </Box>
   );
 }

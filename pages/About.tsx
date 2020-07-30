@@ -4,25 +4,35 @@ import { Theme, makeStyles } from '@material-ui/core/styles';
 import { 
   Avatar,
   Box,
+  Container,
   Divider,
   List,
   ListItem,
   ListItemText,
  } from '@material-ui/core';
 
+ import TabTitle from './components/TabTitle';
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginTop: theme.spacing(5),
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarArea: {
     display: 'flex',
     // '& > *': {
     //   margin: theme.spacing(3),
     // },
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(2),
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
   },
   list: {
     width: '100%',
@@ -31,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: theme.spacing(20),
     height: theme.spacing(20),
   },
+  message: {
+    marginBottom: theme.spacing(10),
+    // color: '',
+    fontWeight: 'bold',
+    // textShadow: `5px 0px 5px #303030`,
+  },
 }));
 
 
@@ -38,7 +54,8 @@ const About: NextPage = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
+    <Container maxWidth='md' className={classes.root}>
+      <TabTitle title={'About'} />
       <Box className={classes.avatarArea}>
         <Avatar
           src="/goma.png"
@@ -106,7 +123,7 @@ const About: NextPage = () => {
         </ListItem>
         <Divider />
       </List>
-    </Box>
+    </Container>
   );
 };
 
