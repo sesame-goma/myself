@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   title: {
     marginBottom: theme.spacing(5),
     fontWeight: 'bold',
-    // textShadow: `5px 0px 5px #303030`,
     borderBottom: 'solid',
     borderBottomColor: theme.palette.secondary.main,
   },

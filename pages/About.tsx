@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   avatarArea: {
     display: 'flex',
-    // '& > *': {
-    //   margin: theme.spacing(3),
-    // },
     marginBottom: theme.spacing(2),
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -43,9 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   message: {
     marginBottom: theme.spacing(10),
-    // color: '',
     fontWeight: 'bold',
-    // textShadow: `5px 0px 5px #303030`,
   },
 }));
 

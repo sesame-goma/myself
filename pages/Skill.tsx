@@ -157,11 +157,11 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
                     readOnly={true}
                   />
                 }
-                actionIcon={
-                  <IconButton className={classes.infoIcon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
+                // actionIcon={
+                //   <IconButton className={classes.infoIcon}>
+                //     <InfoIcon />
+                //   </IconButton>
+                // }
               />
             </Box>
           </GridListTile>
@@ -182,11 +182,11 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
                   readOnly={true}
                 />
               }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
+              // actionIcon={
+              //   <IconButton className={classes.infoIcon}>
+              //     <InfoIcon />
+              //   </IconButton>
+              // }
             />
           </Box>
         </GridListTile>
@@ -206,11 +206,11 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
                   readOnly={true}
                 />
               }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
+              // actionIcon={
+              //   <IconButton className={classes.infoIcon}>
+              //     <InfoIcon />
+              //   </IconButton>
+              // }
             />
           </Box>
         </GridListTile>
@@ -230,11 +230,11 @@ const Skill: React.FunctionComponent<BreakpointInterface> = props => {
                   readOnly={true}
                 />
               }
-              actionIcon={
-                <IconButton className={classes.infoIcon}>
-                  <InfoIcon />
-                </IconButton>
-              }
+              // actionIcon={
+              //   <IconButton className={classes.infoIcon}>
+              //     <InfoIcon />
+              //   </IconButton>
+              // }
             />
           </Box>
         </GridListTile>
