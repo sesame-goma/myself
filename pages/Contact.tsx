@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      width: '100vw',
     },
     message: {
       marginTop: theme.spacing(10),

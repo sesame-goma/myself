@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100vw',
   },
   avatarArea: {
     display: 'flex',

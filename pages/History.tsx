@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) => {
       flex: 1,
       justifyContent: 'start',
       alignItems: 'center',
+      width: '100vw',
     },
     stepBox: {
     },

@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100vw',
   },
   bottomAdjuster: {
     marginBottom: theme.spacing(5),

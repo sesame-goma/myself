@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) => {
       position: 'absolute',
       top: 0,
       left: 0,
+      width: '100vw',
     },
     appBar: {
       backgroundImage:

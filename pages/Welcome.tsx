@@ -4,6 +4,7 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
+      width: '98%',
       borderBottom: 'solid 3px #fafafa',
       position: 'absolute',
       top: '40vh',
