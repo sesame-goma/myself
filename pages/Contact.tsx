@@ -82,28 +82,6 @@ const Contact = () => {
       >
         <ListItem>
           <ListItemIcon>
-            <TwitterIcon className={classes.twitter} />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography 
-                variant="subtitle1"
-                className={classes.link} 
-              >
-                <Link
-                  href='https://twitter.com/sesame_apps'
-                  target='_blank'
-                  rel='noopener'
-                >
-                  Twitter
-                </Link>
-              </Typography>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemIcon>
             <GitHubIcon className={classes.github} />
           </ListItemIcon>
           <ListItemText
@@ -219,13 +197,6 @@ const Contact = () => {
         </ListItem>
         <Divider />
       </List>
-      <Typography 
-        variant="subtitle1"
-        className={classes.message} 
-      >
-        お問い合わせはTwitterのDMまで
-        <Icon className={clsx('far fa-paper-plane', classes.mailIcon)} />
-      </Typography>
     </Container>
   );
 }
